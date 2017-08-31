@@ -34,21 +34,25 @@ class ViewController: UIViewController {
         }
     }
     
+    private var model = CalculatorModel()
+    
     @IBAction func performOperation(_ sender: UIButton) {
-        let mathSymbol = sender.currentTitle!
         
-        switch mathSymbol {
-            
-        case "π":
-            displayValue = Double.pi
-            
-        case "√":
-            displayValue = sqrt(displayValue)
+        if userIsInTheMiddleOfTipping {
+            model.setOperand(displayValue)
             userIsInTheMiddleOfTipping = false
-            
-        default:
-            break
         }
+        
+        if let mathSymbol = sender.currentTitle {
+            model.performOperation(mathSymbol)
+        }
+        
+        if let result = model.result {
+            displayValue = result
+        }
+        
+        
+
     }
     
 }
